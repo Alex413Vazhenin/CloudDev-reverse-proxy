@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
@@ -6,22 +6,26 @@ metadata:
   name: reverseproxy
 spec:
   replicas: 1
+  selector:
+  matchLabels:
+    app: reverse-proxy
   template:
     metadata:
       labels:
+        app: reverse-proxy
         service: reverseproxy
     spec:
       containers:
-        - image: insaneall/simple-reverse-proxy
-          name: reverseproxy
-          imagePullPolicy: Always
-          resources:
-            requests:
-              memory: '64Mi'
-              cpu: '250m'
-            limits:
-              memory: '1024Mi'
-              cpu: '500m'
-          ports:
-            - containerPort: 8080
+      - image: insaneall/simple-reverse-proxy
+        name: reverseproxy
+        imagePullPolicy: Always          
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "1024Mi"
+            cpu: "500m"       
+        ports:
+        - containerPort: 8080
       restartPolicy: Always
