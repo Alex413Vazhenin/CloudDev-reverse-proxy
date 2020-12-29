@@ -7,8 +7,8 @@ metadata:
 spec:
   replicas: 1
   selector:
-  matchLabels:
-    app: reverse-proxy
+    matchLabels:
+      app: reverse-proxy
   template:
     metadata:
       labels:
